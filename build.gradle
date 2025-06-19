@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.0'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'vn.edu.thuonguyen'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    // Spring Boot Starters (đây là cách đúng để thêm các tính năng của Spring Boot)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Để dùng JPA và tương tác DB
+    implementation 'org.springframework.boot:spring-boot-starter-web'      // Để xây dựng API REST
+    implementation 'org.springframework.boot:spring-boot-starter-security' // Để xác thực và phân quyền (JWT, RBAC)
+    implementation 'org.springframework.boot:spring-boot-starter-validation' // Để validate dữ liệu đầu vào
+    implementation 'org.springframework.boot:spring-boot-starter-actuator' // Để theo dõi và quản lý ứng dụng
+    implementation 'org.springframework.boot:spring-boot-starter-aop'      // Cho AOP (ví dụ: Logging, transaction)
+
+    // Các thư viện khác không phải của Spring Framework
+    compileOnly 'org.projectlombok:lombok'            // Giảm boilerplate code
+    annotationProcessor 'org.projectlombok:lombok'    // Xử lý annotations của Lombok
+
+    // MySQL Connector (chỉ một phiên bản, dùng cái mới nhất)
+    runtimeOnly 'com.mysql:mysql-connector-j'         // MySQL driver cho Java 8+ và Spring Boot 3+
+
+    // DevTools (cho phát triển, tự động restart khi code thay đổi)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Test dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' // Cho unit và integration tests
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // Cho JUnit 5
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
